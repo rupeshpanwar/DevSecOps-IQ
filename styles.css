@@ -5,17 +5,14 @@ body {
     margin: 0 auto;
   }
   
-  h1 {
-    font-size: 28px;
-    margin-bottom: 20px;
+  .sidebar {
+    float: left;
+    width: 200px;
   }
   
-  h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-  
-  button {
+  .sidebar-button {
+    display: block;
+    width: 100%;
     background-color: #f5f8fa;
     color: #0366d6;
     font-size: 18px;
@@ -26,12 +23,8 @@ body {
     cursor: pointer;
   }
   
-  .answer {
-    background-color: #f5f8fa;
-    color: #444;
-    font-size: 16px;
-    padding: 10px 15px;
-    margin-bottom: 10px;
+  .main-content {
+    margin-left: 220px;
   }
   
   .collapsible {
