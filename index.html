@@ -91,7 +91,8 @@
         </li>      
       </ul>
       <br>
-      <h3>Steps to Deploy</h3>
+      <h3 class="collapsible" onclick="toggleAnswer('deploy')">Steps to Deploy</h3>
+      <div class="content">
       <ol>
         <li>Install Argo CD: Install Argo CD on your Kubernetes cluster using the official documentation or the provided installation instructions. Make sure the Argo CD controller and the Argo CD CLI (argocd) are properly installed and configured.</li>
         <li>Create a Git repository: Set up a Git repository to store your application manifests. Initialize the repository with a README.md file or any other desired content.</li>
@@ -103,6 +104,7 @@
         <li>Monitor the deployment: Monitor the Argo CD interface or use the argocd CLI to track the progress of the deployment. Argo CD provides detailed information on the sync status, application health, and any errors encountered during the deployment.</li>
         <li>Update and redeploy the application: To make changes to the application, update the application manifest in the Git repository, commit, and push the changes. Argo CD will automatically detect the changes and perform a new sync operation to apply the updates to the cluster.</li>
       </ol>
+    </div>
       <br>
     </div>
 
