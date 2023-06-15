@@ -70,8 +70,6 @@
   </div>
 
   <div class="main-content">
-    <h1>DevSecOps Interview Questionnaire</h1>
-
     <div class="section" id="argo" style="display: none;">
       <h2>Argo CD</h2>
       <p>
@@ -81,14 +79,18 @@
         Some key features of Argo CD include:
       </p>
       <ul>
-        <li>Declarative GitOps</li>
-        <li>Application Synchronization</li>
-        <li>Rollbacks and Rollouts</li>
-        <li>Multi-Environment Support</li>
-        <li>Integration with Git and CI/CD</li>
+        <li> Declarative GitOps: Argo CD uses declarative YAML manifests stored in a Git repository to define the desired state of the applications. It continuously monitors the repository for changes and automatically applies them to the cluster.
+        </li>
+        <li> Application Synchronization: Argo CD compares the desired state defined in the Git repository with the current state of the applications in the cluster. It performs a sync operation to reconcile any differences and bring the cluster to the desired state.
+        </li>
+        <li> Rollbacks and Rollouts: Argo CD supports rollback and rollout functionalities, allowing you to easily revert to a previous version of an application or perform controlled deployments with multiple stages.
+        </li>
+        <li> Multi-Environment Support: Argo CD can manage applications across multiple environments, such as development, staging, and production. It provides a consistent deployment workflow and allows easy promotion of applications between environments.
+        </li>
+        <li> Integration with Git and CI/CD: Argo CD integrates with popular Git providers like GitHub and GitLab, allowing you to store your application manifests in a Git repository. It can also integrate with CI/CD pipelines to trigger deployments automatically when changes are pushed to the repository.
+        </li>      
       </ul>
-      <br>
-      If you have any specific questions or topics you'd like to explore further about Argo CD, feel free to let me know!
+
     </div>
 
     <div class="section" id="k8s" style="display: none;">
