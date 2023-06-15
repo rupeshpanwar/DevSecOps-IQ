@@ -51,16 +51,15 @@
   </style>
   <script>
     function toggleAnswer(sectionId) {
-      const sections = document.getElementsByClassName('section');
-      for (let i = 0; i < sections.length; i++) {
-        const section = sections[i];
-        if (section.id === sectionId) {
-          section.style.display = 'block';
-        } else {
-          section.style.display = 'none';
+          const section = document.getElementById(sectionId);
+          section.classList.toggle('active');
+          const content = section.nextElementSibling;
+          if (content.style.display === 'block') {
+            content.style.display = 'none';
+          } else {
+            content.style.display = 'block';
+          }
         }
-      }
-    }
   </script>
 </head>
 <body>
@@ -91,6 +90,7 @@
         </li>      
       </ul>
       <br>
+
       <h3 class="collapsible" onclick="toggleAnswer('deploy')">Steps to Deploy</h3>
       <div class="content">
       <ol>
