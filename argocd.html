@@ -7,40 +7,43 @@
 <body>
   <div class="sidebar">
     <a href="index.html"><button>Main Page</button></a>
-    <button onclick="toggleAnswer('argo')">Argo CD</button>
+    <button onclick="toggleAnswer('argo-cd')">Argo CD</button>
     <a href="kubernetes.html"><button>Kubernetes</button></a>
   </div>
 
   <div class="main-content">
     <div class="section" id="argo">
-        <p id="argo-description">
-            Argo CD is a declarative, GitOps continuous delivery tool for Kubernetes. It helps automate the deployment and management of applications in a Kubernetes cluster by tracking changes in Git repositories and continuously applying them to the cluster. It ensures that the desired state of the applications in the cluster matches the desired state defined in the Git repository.
-          </p>
-          <p>
-            Some key features of Argo CD include:
-          </p>
-          <ul>
-            <li> Declarative GitOps: Argo CD uses declarative YAML manifests stored in a Git repository to define the desired state of the applications. It continuously monitors the repository for changes and automatically applies them to the cluster.</li>
-            <li> Application Synchronization: Argo CD compares the desired state defined in the Git repository with the current state of the applications in the cluster. It performs a sync operation to reconcile any differences and bring the cluster to the desired state.</li>
-            <li> Rollbacks and Rollouts: Argo CD supports rollback and rollout functionalities, allowing you to easily revert to a previous version of an application or perform controlled deployments with multiple stages.</li>
-            <li> Multi-Environment Support: Argo CD can manage applications across multiple environments, such as development, staging, and production. It provides a consistent deployment workflow and allows easy promotion of applications between environments.</li>
-            <li> Integration with Git and CI/CD: Argo CD integrates with popular Git providers like GitHub and GitLab, allowing you to store your application manifests in a Git repository. It can also integrate with CI/CD pipelines to trigger deployments automatically when changes are pushed to the repository.</li>      
-          </ul>
+      <h3 class="collapsible" onclick="toggleAnswer('argo-cd')">Argo CD</h3>
+      <div class="content" id="argo-cd" style="display: none;">
+        <p>
+          Argo CD is a declarative, GitOps continuous delivery tool for Kubernetes. It helps automate the deployment and management of applications in a Kubernetes cluster by tracking changes in Git repositories and continuously applying them to the cluster. It ensures that the desired state of the applications in the cluster matches the desired state defined in the Git repository.
+        </p>
+        <p>
+          Some key features of Argo CD include:
+        </p>
+        <ul>
+          <li>Declarative GitOps: Argo CD uses declarative YAML manifests stored in a Git repository to define the desired state of the applications. It continuously monitors the repository for changes and automatically applies them to the cluster.</li>
+          <li>Application Synchronization: Argo CD compares the desired state defined in the Git repository with the current state of the applications in the cluster. It performs a sync operation to reconcile any differences and bring the cluster to the desired state.</li>
+          <li>Rollbacks and Rollouts: Argo CD supports rollback and rollout functionalities, allowing you to easily revert to a previous version of an application or perform controlled deployments with multiple stages.</li>
+          <li>Multi-Environment Support: Argo CD can manage applications across multiple environments, such as development, staging, and production. It provides a consistent deployment workflow and allows easy promotion of applications between environments.</li>
+          <li>Integration with Git and CI/CD: Argo CD integrates with popular Git providers like GitHub and GitLab, allowing you to store your application manifests in a Git repository. It can also integrate with CI/CD pipelines to trigger deployments automatically when changes are pushed to the repository.</li>      
+        </ul>
+      </div>
     </div>
     <h3 class="collapsible" onclick="toggleAnswer('argo-steps')">Steps to Deploy</h3>
-      <div class="content" id="argo-steps">
-        <ol>
-          <li>Install Argo CD: Install Argo CD on your Kubernetes cluster using the official documentation or the provided installation instructions. Make sure the Argo CD controller and the Argo CD CLI (argocd) are properly installed and configured.</li>
-          <li>Create a Git repository: Set up a Git repository to store your application manifests. Initialize the repository with a README.md file or any other desired content.</li>
-          <li>Create an application manifest: Create an application manifest YAML file in your Git repository to define the desired state of your application. The manifest should specify the application metadata, source repository URL, and target cluster information. You can also define additional settings like sync policy, auto-sync, and health checks.</li>
-          <li>Commit and push the application manifest: Commit and push the application manifest file to your Git repository. Ensure that the file is accessible and properly committed.</li>
-          <li>Connect Argo CD to the Git repository: In the Argo CD interface or using the argocd CLI, connect Argo CD to the Git repository by providing the repository URL, branch, and any authentication credentials if required. This allows Argo CD to track changes in the repository.</li>
-          <li>Create the application in Argo CD: Use the Argo CD interface or the argocd CLI to create an application object that represents your application. Specify the application name, project, and the path to the application manifest within the Git repository.</li>
-          <li>Sync the application: Trigger a sync operation to deploy the application. Argo CD will compare the desired state defined in the application manifest with the current state in the cluster and apply any necessary changes to bring the cluster to the desired state.</li>
-          <li>Monitor the deployment: Monitor the Argo CD interface or use the argocd CLI to track the progress of the deployment. Argo CD provides detailed information on the sync status, application health, and any errors encountered during the deployment.</li>
-          <li>Update and redeploy the application: To make changes to the application, update the application manifest in the Git repository, commit, and push the changes. Argo CD will automatically detect the changes and perform a new sync operation to apply the updates to the cluster.</li>
-        </ol>
-      </div>
+    <div class="content" id="argo-steps" style="display: none;">
+      <ol>
+        <li>Install Argo CD: Install Argo CD on your Kubernetes cluster using the official documentation or the provided installation instructions. Make sure the Argo CD controller and the Argo CD CLI (argocd) are properly installed and configured.</li>
+        <li>Create a Git repository: Set up a Git repository to store your application manifests. Initialize the repository with a README.md file or any other desired content.</li>
+        <li>Create an application manifest: Create an application manifest YAML file in your Git repository to define the desired state of your application. The manifest should specify the application metadata, source repository URL, and target cluster information. You can also define additional settings like sync policy, auto-sync, and health checks.</li>
+        <li>Commit and push the application manifest: Commit and push the application manifest file to your Git repository. Ensure that the file is accessible and properly committed.</li>
+        <li>Connect Argo CD to the Git repository: In the Argo CD interface or using the argocd CLI, connect Argo CD to the Git repository by providing the repository URL, branch, and any authentication credentials if required. This allows Argo CD to track changes in the repository.</li>
+        <li>Create the application in Argo CD: Use the Argo CD interface or the argocd CLI to create an application object that represents your application. Specify the application name, project, and the path to the application manifest within the Git repository.</li>
+        <li>Sync the application: Trigger a sync operation to deploy the application. Argo CD will compare the desired state defined in the application manifest with the current state in the cluster and apply any necessary changes to bring the cluster to the desired state.</li>
+        <li>Monitor the deployment: Monitor the Argo CD interface or use the argocd CLI to track the progress of the deployment. Argo CD provides detailed information on the sync status, application health, and any errors encountered during the deployment.</li>
+        <li>Update and redeploy the application: To make changes to the application, update the application manifest in the Git repository, commit, and push the changes. Argo CD will automatically detect the changes and perform a new sync operation to apply the updates to the cluster.</li>
+      </ol>
+    </div>
   </div>
 
   <script src="script.js"></script>
