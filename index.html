@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>FAQ</title>
+  <title>DevSecOps Interview Questionnaire</title>
   <style>
     body {
       font-family: 'Helvetica Neue', Arial, sans-serif;
@@ -50,9 +50,16 @@
     }
   </style>
   <script>
-    function toggleAnswer(questionId) {
-      const answer = document.getElementById(questionId);
-      answer.style.display = answer.style.display === 'none' ? 'block' : 'none';
+    function toggleAnswer(sectionId) {
+      const sections = document.getElementsByClassName('section');
+      for (let i = 0; i < sections.length; i++) {
+        const section = sections[i];
+        if (section.id === sectionId) {
+          section.style.display = 'block';
+        } else {
+          section.style.display = 'none';
+        }
+      }
     }
   </script>
 </head>
@@ -65,7 +72,7 @@
   <div class="main-content">
     <h1>DevSecOps Interview Questionnaire</h1>
 
-    <div class="answer" id="argo" style="display: none;">
+    <div class="section" id="argo" style="display: none;">
       <h2>Argo CD</h2>
       <p>
         Argo CD is a declarative, GitOps continuous delivery tool for Kubernetes. It helps automate the deployment and management of applications in a Kubernetes cluster by tracking changes in Git repositories and continuously applying them to the cluster. It ensures that the desired state of the applications in the cluster matches the desired state defined in the Git repository.
@@ -84,7 +91,7 @@
       If you have any specific questions or topics you'd like to explore further about Argo CD, feel free to let me know!
     </div>
 
-    <div class="answer" id="k8s" style="display: none;">
+    <div class="section" id="k8s" style="display: none;">
       <h2>Kubernetes</h2>
       <p>
         Kubernetes is an open-source container orchestration platform that automates the deployment, scaling, and management of containerized applications. It provides a robust framework for running and managing containers across clusters of machines.
