@@ -48,6 +48,14 @@
       padding: 10px 15px;
       margin-bottom: 10px;
     }
+    .collapsible {
+      cursor: pointer;
+    }
+
+    .content {
+      display: none;
+      padding-left: 20px;
+    }
   </style>
   <script>
     function toggleAnswer(sectionId) {
@@ -70,7 +78,7 @@
 
   <div class="main-content">
     <div class="section" id="argo" style="display: none;">
-      <h2>Argo CD</h2>
+      <h2 class="collapsible" onclick="toggleAnswer('deploy')">Argo CD</h2>
       <p>
         Argo CD is a declarative, GitOps continuous delivery tool for Kubernetes. It helps automate the deployment and management of applications in a Kubernetes cluster by tracking changes in Git repositories and continuously applying them to the cluster. It ensures that the desired state of the applications in the cluster matches the desired state defined in the Git repository.
       </p>
