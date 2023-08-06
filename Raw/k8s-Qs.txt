@@ -1,7 +1,4 @@
 
-k8s interview
-ChatGPT
-Sure, I can definitely provide you with some Kubernetes (K8s) interview questions and potential answers. This will help you to prepare for a technical interview related to Kubernetes. Remember, this is not a guarantee of what you'll be asked in an interview, but it will give you a good foundation of understanding.
 
 What is Kubernetes?
 
