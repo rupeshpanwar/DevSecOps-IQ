@@ -1,0 +1,30 @@
+
+k8s interview
+ChatGPT
+Sure, I can definitely provide you with some Kubernetes (K8s) interview questions and potential answers. This will help you to prepare for a technical interview related to Kubernetes. Remember, this is not a guarantee of what you'll be asked in an interview, but it will give you a good foundation of understanding.
+
+What is Kubernetes?
+
+Kubernetes is an open-source container orchestration system that automates the deployment, scaling, and management of containerized applications. It groups containers into "Pods", which are units of deployment that can be managed and scaled as a unit.
+What are some key components of Kubernetes architecture?
+
+There are several key components in the Kubernetes architecture. Some of these include the Master Node (with components like API Server, Controller Manager, Scheduler, and etcd), Worker Nodes (which contain Pods, Kubelet, and Kube-proxy), and additional components like Services and Ingress.
+What is a Kubernetes Pod?
+
+A Pod is the smallest and simplest unit in the Kubernetes object model that you create or deploy. A Pod represents a single instance of a running process in a cluster and can contain one or more containers.
+Can you explain what a Kubernetes Service is?
+
+A Kubernetes Service is an abstraction that defines a logical set of Pods and a policy by which to access them, sometimes referred to as a micro-service. The set of Pods targeted by a Service is usually determined by a Label Selector.
+What is the role of the Kubelet in Kubernetes?
+
+The Kubelet is an agent that runs on each node in the cluster. Its primary job is to make sure that containers are running in a Pod. It takes a set of PodSpecs that are provided through various mechanisms and ensures that the containers described in those PodSpecs are running and healthy.
+How does Kubernetes use etcd?
+
+Etcd is a distributed key-value store that Kubernetes uses to store all its data – its configuration data, its state, and its metadata. It is mainly used by Kubernetes' master nodes.
+What is the difference between a ReplicaSet and a Deployment in Kubernetes?
+
+A ReplicaSet is a Kubernetes object that ensures that a specified number of pod replicas are running at any given time. However, a Deployment is a higher-level concept that manages ReplicaSets and provides declarative updates to Pods along with a lot of other useful features.
+What is an Ingress in Kubernetes?
+
+In Kubernetes, an Ingress is an API object that manages external access to the services in a cluster, typically HTTP. Ingress can provide load balancing, SSL termination, and name-based virtual hosting.
+Remember to give answers with practical examples and to the best of your knowledge and experience. You might also get scenario-based Kubernetes questions where you would have to explain how you would handle a situation or solve a problem.
