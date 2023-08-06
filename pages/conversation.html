@@ -602,7 +602,7 @@ If you're using AWS SSO or need to assume the role from a base set of credential
 Here is an example:
 
 ```bash
-aws sts assume-role --role-arn arn:aws:iam::123456789012:role/xaccounts3access --role-session-name s3-access
+aws sts assume-role --role-arn arn:aws:iam::34600784:role/xaccounts3access --role-session-name s3-access
 ```
 
 The command will return JSON output with temporary security credentials:
@@ -617,7 +617,7 @@ The command will return JSON output with temporary security credentials:
     },
     "AssumedRoleUser": {
         "AssumedRoleId": "AROAJWE54EDNN7EXAMPLE:app1",
-        "Arn": "arn:aws:sts::123456789012:assumed-role/xaccounts3access/app1"
+        "Arn": "arn:aws:sts::34600784:assumed-role/xaccounts3access/app1"
     }
 }
 ```
@@ -638,7 +638,7 @@ Here is an example of how you can assume an IAM role and set the resulting crede
 
 ```bash
 # Assume the role and output the credentials as environment variables
-temp_role=$(aws sts assume-role --role-arn "arn:aws:iam::123456789012:role/example" --role-session-name "ExampleSession")
+temp_role=$(aws sts assume-role --role-arn "arn:aws:iam::34600784:role/example" --role-session-name "ExampleSession")
 export AWS_ACCESS_KEY_ID=$(echo $temp_role | jq .Credentials.AccessKeyId | xargs)
 export AWS_SECRET_ACCESS_KEY=$(echo $temp_role | jq .Credentials.SecretAccessKey | xargs)
 export AWS_SESSION_TOKEN=$(echo $temp_role | jq .Credentials.SessionToken | xargs)
@@ -647,7 +647,7 @@ export AWS_SESSION_TOKEN=$(echo $temp_role | jq .Credentials.SessionToken | xarg
 terraformer import aws --resources=s3 --regions=us-west-2
 ```
 
-Remember to replace `"arn:aws:iam::123456789012:role/example"` with the ARN of your IAM role.
+Remember to replace `"arn:aws:iam::34600784:role/example"` with the ARN of your IAM role.
 
 This script assumes the role, then extracts the access key ID, secret access key, and session token from the response and sets them as environment variables. Terraformer will then use these environment variables for authentication.
 
@@ -1100,11 +1100,11 @@ You would first need to set up the AWS CLI on the machine where you're running T
 
 ```bash
 [profile myrole]
-role_arn = arn:aws:iam::123456789012:role/myrole
+role_arn = arn:aws:iam::34600784:role/myrole
 credential_source = Ec2InstanceMetadata
 ```
 
-In this example, `myrole` is the name of the profile, and `arn:aws:iam::123456789012:role/myrole` is the ARN of the IAM role you want to assume.
+In this example, `myrole` is the name of the profile, and `arn:aws:iam::34600784:role/myrole` is the ARN of the IAM role you want to assume.
 
 Then, you can tell Terraformer to use this profile by setting the `AWS_PROFILE` environment variable:
 
@@ -1125,7 +1125,7 @@ variables:
   AWS_PROFILE: "myrole"
 ```
 
-Please replace `myrole` and `arn:aws:iam::123456789012:role/myrole` with your actual profile name and IAM role ARN. Also, remember that the IAM role should have the necessary permissions to list and describe the AWS resources you want to import into Terraform.
+Please replace `myrole` and `arn:aws:iam::34600784:role/myrole` with your actual profile name and IAM role ARN. Also, remember that the IAM role should have the necessary permissions to list and describe the AWS resources you want to import into Terraform.
 
 You also need to consider that the instance where you are running this should have the permissions to assume the IAM role. If it's an EC2 instance, it should have an IAM role attached with the permissions to assume the role, or if you're using AWS Secrets in GitLab, you can add the Access key ID and Secret access key as secret variables in GitLab.
 </div>
@@ -1183,7 +1183,7 @@ import_tf_resources:
     - sudo ./aws/install
     # Configure AWS CLI with your IAM role
     - mkdir ~/.aws
-    - echo -e "[profile developer]\nrole_arn = arn:aws:iam::123456789012:role/developer-role\ncredential_source = Ec2InstanceMetadata" > ~/.aws/config
+    - echo -e "[profile developer]\nrole_arn = arn:aws:iam::34600784:role/developer-role\ncredential_source = Ec2InstanceMetadata" > ~/.aws/config
     # Set AWS_PROFILE environment variable
     - export AWS_PROFILE=developer
     - TERRAFORMER_DOWNLOAD_URL="https://github.com/GoogleCloudPlatform/terraformer/releases/download/0.8.24/terraformer-all-linux-amd64"
@@ -1201,7 +1201,7 @@ import_tf_resources:
     expire_in: 1 week
 ```
 
-Please replace `arn:aws:iam::123456789012:role/developer-role` with the actual ARN of your IAM role. Also, please note that `credential_source = Ec2InstanceMetadata` means that AWS CLI will get the initial AWS credentials from the EC2 instance metadata. You need to ensure that the EC2 instance running the GitLab runner has an IAM role with permissions to assume the `developer-role`. If it doesn't, you'll need to modify the `~/.aws/config` file and AWS CLI configuration accordingly.</div>
+Please replace `arn:aws:iam::34600784:role/developer-role` with the actual ARN of your IAM role. Also, please note that `credential_source = Ec2InstanceMetadata` means that AWS CLI will get the initial AWS credentials from the EC2 instance metadata. You need to ensure that the EC2 instance running the GitLab runner has an IAM role with permissions to assume the `developer-role`. If it doesn't, you'll need to modify the `~/.aws/config` file and AWS CLI configuration accordingly.</div>
 <div class="user">$ ./aws/install
 Found preexisting AWS CLI installation: /usr/local/aws-cli/v2/current. Please rerun install script with --update flag.
 </div>
@@ -10431,8 +10431,8 @@ The command above would only import the Lambda function with the name specified 
 Note: This filtering mechanism is relatively new and might not be available in older versions of Terraformer. If you run into issues using it, consider upgrading Terraformer to the latest version.
 
 Keep in mind that `--filter` functionality is evolving and may not work exactly as expected for all resources or cases.</div>
-<div class="user">2023/07/19 06:26:25 aws error initializing resources in service lambda, err: operation error Lambda: GetPolicy, https response error StatusCode: 403, RequestID: 121-123-1233, api error AccessDeniedException: User: arn:aws:sts::332542775674:assumed-role/some-role/i-1234 is not authorized to perform: lambda:GetPolicy on resource: arn:aws:lambda:ap-southeast-1:123:function:policy because no permissions boundary allows the lambda:GetPolicy action</div>
-<div class="assistant">This error is due to missing permissions in the IAM role being used by Terraformer. The error indicates that the IAM role (`arn:aws:sts::332542775674:assumed-role/some-role/i-1234`) does not have permissions to perform the `lambda:GetPolicy` action.
+<div class="user">2023/07/19 06:26:25 aws error initializing resources in service lambda, err: operation error Lambda: GetPolicy, https response error StatusCode: 403, RequestID: 121-123-1233, api error AccessDeniedException: User: arn:aws:sts::34600784:assumed-role/some-role/i-1234 is not authorized to perform: lambda:GetPolicy on resource: arn:aws:lambda:ap-southeast-1:123:function:policy because no permissions boundary allows the lambda:GetPolicy action</div>
+<div class="assistant">This error is due to missing permissions in the IAM role being used by Terraformer. The error indicates that the IAM role (`arn:aws:sts::34600784:assumed-role/some-role/i-1234`) does not have permissions to perform the `lambda:GetPolicy` action.
 
 To resolve this, you need to adjust the IAM policy attached to the role `some-role` to include the necessary permissions.
 
@@ -12492,10 +12492,10 @@ module.eventbridge_rules.aws_cloudwatch_event_rule.event_rule: Import prepared!
 If your rule name is defined as a variable in the Terraform configuration, you should probably be referencing the index in your import command like this:
 
 ```bash
-terraform import "module.eventbridge_rules.aws_cloudwatch_event_rule.event_rule[\"daily-report\"]" arn:aws:events:us-east-1:123456789012:rule/example-rule
+terraform import "module.eventbridge_rules.aws_cloudwatch_event_rule.event_rule[\"daily-report\"]" arn:aws:events:us-east-1:34600784:rule/example-rule
 ```
 
-In this case, `daily-report` is the key to `aws_cloudwatch_event_rule` map and `arn:aws:events:us-east-1:123456789012:rule/example-rule` is the ARN of the EventBridge rule. You would replace `arn:aws:events:us-east-1:123456789012:rule/example-rule` with the actual ARN of your EventBridge rule. 
+In this case, `daily-report` is the key to `aws_cloudwatch_event_rule` map and `arn:aws:events:us-east-1:34600784:rule/example-rule` is the ARN of the EventBridge rule. You would replace `arn:aws:events:us-east-1:34600784:rule/example-rule` with the actual ARN of your EventBridge rule. 
 
 Also, please make sure you're not running Terraform in a different workspace than you're expecting. You can check the current workspace with `terraform workspace show`.
 
@@ -18011,9 +18011,9 @@ artifacts:
     - checkov_results_modules.csv
 ```</div>
 <div class="user">$ checkov -d ${CI_PROJECT_DIR}/environments/dev/ --output csv
-Persisting SBOM to /builds/temus/terraform-infra-automation/environments/dev/20230731-054809_iac.csv
-Persisting SBOM to /builds/project/terraform/environments/dev/20230731-054809_container_images.csv
-Persisting SBOM to /builds/project/terraform/environments/dev/20230731-054809_oss_packages.csv
+Persisting SBOM to /builds/temus/terraform-infra-automation/environments/dev/34600784-054809_iac.csv
+Persisting SBOM to /builds/project/terraform/environments/dev/34600784-054809_container_images.csv
+Persisting SBOM to /builds/project/terraform/environments/dev/34600784-054809_oss_packages.csv
 Cleaning up project directory and file based variables
 00:01
 ERROR: Job failed: command terminated with exit code 1</div>
@@ -18120,7 +18120,7 @@ If you still want to generate the `.csv` format and the `checkov` command with `
 <div class="user">below section 
 security_check:
   stage: security_check
-  image: 332542775674.dkr.ecr.ap-southeast-1.amazonaws.com/tf-runner:checkov
+  image: 34600784.dkr.ecr.ap-southeast-1.amazonaws.com/tf-runner:checkov
   script:
     - which checkov || echo "Checkov not found"
     - checkov -v || echo "Checkov version not found"
@@ -18158,7 +18158,7 @@ If `modules/s3/` is not the correct directory, replace it with the correct one. 
 ```yaml
 security_check:
   stage: security_check
-  image: 332542775674.dkr.ecr.ap-southeast-1.amazonaws.com/tf-runner:checkov
+  image: 34600784.dkr.ecr.ap-southeast-1.amazonaws.com/tf-runner:checkov
   script:
     - which checkov || echo "Checkov not found"
     - checkov -v || echo "Checkov version not found"
@@ -18181,7 +18181,7 @@ Replace `correct_directory` with your actual directory containing the Terraform 
 ```yaml
 security_check:
   stage: security_check
-  image: 332542775674.dkr.ecr.ap-southeast-1.amazonaws.com/tf-runner:checkov
+  image: 34600784.dkr.ecr.ap-southeast-1.amazonaws.com/tf-runner:checkov
   script:
     - which checkov || echo "Checkov not found"
     - checkov -v || echo "Checkov version not found"
@@ -18206,9 +18206,9 @@ drwxrwxrwx 3 root root   310 Jul 31 06:46 .
 drwxrwxrwx 5 root root    44 Jul 31 06:46 ..
 drwxr-xr-x 4 root root    63 Jul 31 06:46 .terraform
 -rw-r--r-- 1 root root  1406 Jul 31 06:46 .terraform.lock.hcl
--rw-r--r-- 1 root root   320 Jul 31 06:46 20230731-064649_container_images.csv
--rw-r--r-- 1 root root  2332 Jul 31 06:46 20230731-064649_iac.csv
--rw-r--r-- 1 root root   320 Jul 31 06:46 20230731-064649_oss_packages.csv
+-rw-r--r-- 1 root root   320 Jul 31 06:46 34600784-064649_container_images.csv
+-rw-r--r-- 1 root root  2332 Jul 31 06:46 34600784-064649_iac.csv
+-rw-r--r-- 1 root root   320 Jul 31 06:46 34600784-064649_oss_packages.csv
 -rw-rw-rw- 1 root root   702 Jul 31 06:46 backend_setup.tf
 -rw-r--r-- 1 root root   325 Jul 31 06:46 checkov_results.csv
 -rw-rw-rw- 1 root root   591 Jul 31 06:46 main.tf
@@ -18240,9 +18240,9 @@ artifacts:
 Your error is occurring because GitLab CI/CD is trying to upload the `checkov_results.csv` file from the location `/builds/project/terraform/` but your file is actually located in `/builds/temus/terraform-infra-automation/environments/dev/`. 
 
 Please replace `project` with your actual project name, `temus`, and make sure the rest of the path corresponds to your project structure.</div>
-<div class="user">in the above csv, result is not visible and coming in below format, can you suggest a better way to generate the result summary : Persisting SBOM to /builds/temus/terraform-infra-automation/environments/dev/20230731-065240_iac.csv
-Persisting SBOM to /builds/temus/terraform-infra-automation/environments/dev/20230731-065240_container_images.csv
-Persisting SBOM to /builds/temus/terraform-infra-automation/environments/dev/20230731-065240_oss_packages.csv</div>
+<div class="user">in the above csv, result is not visible and coming in below format, can you suggest a better way to generate the result summary : Persisting SBOM to /builds/temus/terraform-infra-automation/environments/dev/34600784-065240_iac.csv
+Persisting SBOM to /builds/temus/terraform-infra-automation/environments/dev/34600784-065240_container_images.csv
+Persisting SBOM to /builds/temus/terraform-infra-automation/environments/dev/34600784-065240_oss_packages.csv</div>
 <div class="assistant">From Checkov version 2.0.0 onwards, the output of the checks can be persisted in different formats (json, junitxml, csv, text, yaml) using the `--output` command line option. You've already used this feature to generate a CSV file.
 
 But, it seems like you're not satisfied with the CSV output. One solution could be to use a JSON output, which is more structured and can be easier to analyze. You could use tools or scripts to parse the JSON and generate a summary report based on it.
@@ -18620,7 +18620,7 @@ Assuming you're using an Ubuntu-based Docker image, you might use something like
 ```yaml
 security_check:
   stage: security_check
-  image: 332542775674.dkr.ecr.ap-southeast-1.amazonaws.com/tf-runner:checkov
+  image: 34600784.dkr.ecr.ap-southeast-1.amazonaws.com/tf-runner:checkov
   before_script:
     - apt-get update
     - apt-get install -y python3 python3-pip
@@ -18640,7 +18640,7 @@ security_check:
 
 This `before_script` block will update the system's package lists and then install Python 3 and pip, Python's package manager. It uses `python3` and `pip3` in the script to ensure the installed versions are used.
 
-However, this is just an example and might not work as-is, depending on your specific Docker image and setup. You should replace `332542775674.dkr.ecr.ap-southeast-1.amazonaws.com/tf-runner:checkov` with the Docker image you're using, and adjust the script as needed based on that image.
+However, this is just an example and might not work as-is, depending on your specific Docker image and setup. You should replace `34600784.dkr.ecr.ap-southeast-1.amazonaws.com/tf-runner:checkov` with the Docker image you're using, and adjust the script as needed based on that image.
 
 Also, remember that installing packages like this during each pipeline run can increase the run time of your pipeline. It's often more efficient to create a custom Docker image with everything you need already installed, as I mentioned in my previous message.</div>
 <div class="user">is it possible not to connect to rwww.bridgecrew.cloud' => retries = retries.increment(
@@ -19082,9 +19082,9 @@ This command would run Checkov and output the results in CSV format to a file ca
 The CSV output format includes columns for each of the key pieces of information about the checks, including the check ID, file path, resource name, check result (Passed, Failed, etc.), check category, and check description. This makes it easy to filter and sort the results based on whatever criteria you are interested in.
 
 Just keep in mind that the CSV format may not include all of the details that are available in the JSON output, as the CSV format is optimized for readability and not for complete data representation.</div>
-<div class="user">acutal content wasn't published but only path by the above command : Persisting SBOM to /builds/temus/terraform-infra-automation/environments/dev/20230801-025959_iac.csv
-Persisting SBOM to /builds/temus/terraform-infra-automation/environments/dev/20230801-025959_container_images.csv
-Persisting SBOM to /builds/temus/terraform-infra-automation/environments/dev/20230801-025959_oss_packages.csv</div>
+<div class="user">acutal content wasn't published but only path by the above command : Persisting SBOM to /builds/temus/terraform-infra-automation/environments/dev/34600784-025959_iac.csv
+Persisting SBOM to /builds/temus/terraform-infra-automation/environments/dev/34600784-025959_container_images.csv
+Persisting SBOM to /builds/temus/terraform-infra-automation/environments/dev/34600784-025959_oss_packages.csv</div>
 <div class="assistant">Apologies for the confusion. The `--output csv` option in Checkov is supposed to generate a CSV report of the findings.
 
 The output you're seeing suggests that the output is being redirected to another path in CSV format as a part of Software Bill of Materials (SBOM). It looks like it is generating separate CSV files for infrastructure as code (iac), container images, and open-source software packages (oss_packages).
@@ -19111,9 +19111,9 @@ checkov -v
 
 Ensure that your version supports the `--output csv` flag. If not, you may need to update to a newer version.</div>
 <div class="user">$ checkov -f tfplan.json -c CKV_AWS_20 -c CKV_AWS_52 -c CKV_AWS_53 -c CKV_AWS_21 -c CKV_AWS_18 -c CKV_AWS_19 -c CKV_AWS_130 -c CKV_AWS_131 -c CKV_AWS_132 --output csv || true
-Persisting SBOM to /builds/temus/terraform-infra-automation/environments/dev/20230801-031952_iac.csv
-Persisting SBOM to /builds/temus/terraform-infra-automation/environments/dev/20230801-031952_container_images.csv
-Persisting SBOM to /builds/temus/terraform-infra-automation/environments/dev/20230801-031952_oss_packages.csv</div>
+Persisting SBOM to /builds/temus/terraform-infra-automation/environments/dev/34600784-031952_iac.csv
+Persisting SBOM to /builds/temus/terraform-infra-automation/environments/dev/34600784-031952_container_images.csv
+Persisting SBOM to /builds/temus/terraform-infra-automation/environments/dev/34600784-031952_oss_packages.csv</div>
 <div class="assistant">The log messages indicate that Checkov is generating Software Bill of Materials (SBOM) CSV files. This behavior seems to be related to the version of Checkov you are using or a configuration setting.
 
 The `--output csv` option in the Checkov command should have caused the tool to print the check results to the console in CSV format. However, for some reason, it seems to be generating SBOM files instead.
@@ -19150,7 +19150,7 @@ In the context of your command, you seem to be interested in the `iac.csv` file 
 To view the results, you would need to open the `iac.csv` file after Checkov finishes its scan. This can be done with a simple `cat` command:
 
 ```bash
-cat /builds/temus/terraform-infra-automation/environments/dev/20230801-031952_iac.csv
+cat /builds/temus/terraform-infra-automation/environments/dev/34600784-031952_iac.csv
 ```
 
 Add this command at the end of your script in your pipeline configuration. 
@@ -19160,7 +19160,7 @@ However, please note that the file path will change with every scan because it i
 In terms of adjusting the pipeline to ensure you always fetch the correct `iac.csv` file, you could modify the command to dynamically target the latest generated `iac.csv` file, or update your Checkov command to output the CSVs to a specific filename without a timestamp. This largely depends on your specific requirements and environment setup. 
 
 As always, be sure to consult the official Checkov and/or Bridgecrew documentation or reach out to their support for the most accurate and up-to-date information.</div>
-<div class="user">can you add this command to pipeline and the upload the output to a csv file : cat /builds/temus/terraform-infra-automation/environments/dev/20230801-031952_iac.csv
+<div class="user">can you add this command to pipeline and the upload the output to a csv file : cat /builds/temus/terraform-infra-automation/environments/dev/34600784-031952_iac.csv
 </div>
 <div class="assistant">Yes, to add the command to the pipeline and upload the output CSV file, you can modify your pipeline as follows:
 
@@ -19172,7 +19172,7 @@ security_check:
     - echo "Checking policy with checkov..."
     - terraform show -json planfile > tfplan.json
     - checkov -f tfplan.json -c CKV_AWS_20 -c CKV_AWS_52 -c CKV_AWS_53 -c CKV_AWS_21 -c CKV_AWS_18 -c CKV_AWS_19 -c CKV_AWS_130 -c CKV_AWS_131 -c CKV_AWS_132 --output csv || true
-    - cat /builds/temus/terraform-infra-automation/environments/dev/20230801-031952_iac.csv > checkov_results.csv
+    - cat /builds/temus/terraform-infra-automation/environments/dev/34600784-031952_iac.csv > checkov_results.csv
   artifacts:
     paths:
       - checkov_results.csv
@@ -19182,7 +19182,7 @@ Please note that in this case the `checkov_results.csv` file will contain the re
 
 But remember that the path of the `iac.csv` file will change with every run due to the timestamp included in the file name. You might want to consider a method for determining the latest file, or have Checkov output to a static file name if that's possible.
 
-Keep in mind that you need to adjust the path `/builds/temus/terraform-infra-automation/environments/dev/20230801-031952_iac.csv` in the `cat` command to point to the correct location of the `iac.csv` file generated by Checkov.</div>
+Keep in mind that you need to adjust the path `/builds/temus/terraform-infra-automation/environments/dev/34600784-031952_iac.csv` in the `cat` command to point to the correct location of the `iac.csv` file generated by Checkov.</div>
 <div class="user">can you modify the command to adjust the below: But remember that the path of the iac.csv file will change with every run due to the timestamp included in the file name. You might want to consider a method for determining the latest file, or have Checkov output to a static file name if that's possible.</div>
 <div class="assistant">Sure, you can use a shell command to find the most recently created `iac.csv` file and then copy it to a fixed name. Here is an updated script:
 
@@ -19258,12 +19258,12 @@ script:
 
 This should work the same as the previous command, as the shell automatically concatenates strings separated by spaces. But this might be less likely to cause a type error, depending on what's interpreting the command.</div>
 <div class="user">$ checkov -f tfplan.json -c CKV_AWS_20 -c CKV_AWS_52 -c CKV_AWS_53 -c CKV_AWS_21 -c CKV_AWS_18 -c CKV_AWS_19 -c CKV_AWS_130 -c CKV_AWS_131 -c CKV_AWS_132 --output csv || true
-Persisting SBOM to /builds/project/terraform/environments/dev/20230801-041521_iac.csv
-Persisting SBOM to /builds/project/terraform/environments/dev/20230801-041521_container_images.csv
-Persisting SBOM to /builds/project/terraform/environments/dev/20230801-041521_oss_packages.csv
+Persisting SBOM to /builds/project/terraform/environments/dev/34600784-041521_iac.csv
+Persisting SBOM to /builds/project/terraform/environments/dev/34600784-041521_container_images.csv
+Persisting SBOM to /builds/project/terraform/environments/dev/34600784-041521_oss_packages.csv
 $ latest_file=$(ls -t ${CI_PROJECT_DIR}/environments/dev/*_iac.csv | head -n 1)
 $ echo "Latest CSV file is:" ${latest_file}
-Latest CSV file is: /builds/project/terraform/environments/dev/20230801-041521_iac.csv
+Latest CSV file is: /builds/project/terraform/environments/dev/34600784-041521_iac.csv
 $ cat "$latest_file" > checkov_results.csv
 Saving cache for successful job
 00:01
@@ -19554,7 +19554,7 @@ scan_image:
     - docker info
   script:
     - apk add --no-cache docker
-    - aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 332542775674.dkr.ecr.ap-southeast-1.amazonaws.com
+    - aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 34600784.dkr.ecr.ap-southeast-1.amazonaws.com
     - docker pull 123.dkr.ecr.ap-southeast-1.amazonaws.com/terraform:v1
     - docker pull aquasec/trivy
     - docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy --exit-code 0 --no-progress 123.ecr.ap-southeast-1.amazonaws.com/terraform:v1</div>
@@ -19816,8 +19816,8 @@ build:
     - pip install awscli
   script:
     - eval $(aws ecr get-login --no-include-email --region region) # Replace 'region' with your AWS region
-    - docker build -t 123456789012.dkr.ecr.region.amazonaws.com/my-web-app:latest . # Replace with your ECR repository
-    - docker push 123456789012.dkr.ecr.region.amazonaws.com/my-web-app:latest
+    - docker build -t 34600784.dkr.ecr.region.amazonaws.com/my-web-app:latest . # Replace with your ECR repository
+    - docker push 34600784.dkr.ecr.region.amazonaws.com/my-web-app:latest
 
 scan:
   stage: scan
@@ -19830,7 +19830,7 @@ scan:
     - aws ecr describe-image-scan-findings --repository-name my-web-app --image-id imageTag=latest --region region
 ```
 
-Replace `123456789012.dkr.ecr.region.amazonaws.com/my-web-app:latest` with your actual ECR repository and `region` with your actual AWS region.
+Replace `34600784.dkr.ecr.region.amazonaws.com/my-web-app:latest` with your actual ECR repository and `region` with your actual AWS region.
 
 Keep in mind that this pipeline assumes that you have correctly set up your AWS credentials as secret variables (`AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`) in your GitLab CI/CD settings.
 
@@ -19893,7 +19893,7 @@ we can connect to ecr to pull the images and scan them using native ecr capabili
 
 # Start with Ubuntu 20.04
 FROM 123.bekar.ecr.ap-southeast-1.amazonaws.com/docker-dind:latest AS deploy
-# FROM 332542775674.dkr.ecr.ap-southeast-1.amazonaws.com/tf-runner:v2 AS deploy
+# FROM 34600784.dkr.ecr.ap-southeast-1.amazonaws.com/tf-runner:v2 AS deploy
 
 # Set Environment Variables for Proxy
 ENV http_proxy=http://1.1.1.1:80
@@ -20064,7 +20064,7 @@ This script will do the following:
 3. Start an image scan on the `latest` tag of the `bbb/dummyimage` repository in your ECR registry.
 4. Wait for 60 seconds to give the image scan time to complete.
 5. Retrieve the findings of the image scan.</div>
-<div class="user">actually ECR is hosted in separate aws account say '1920909300', and below are variable defind on the top of the 
+<div class="user">actually ECR is hosted in separate aws account say '34600784', and below are variable defind on the top of the 
 pipelines
 variables:
   TF_ROOT: ${CI_PROJECT_DIR}
@@ -20075,12 +20075,12 @@ variables:
 
 Now   stage: scan_image is returning below error:
 $ aws ecr start-image-scan --repository-name 123.bekar.ecr.ap-southeast-1.amazonaws.com/bbb/dummyimag --image-id imageTag=latest
-An error occurred (RepositoryNotFoundException) when calling the StartImageScan operation: The repository with name '123.bekar.ecr.ap-southeast-1.amazonaws.com/bbb/dummyimag' does not exist in the registry with id '1920909300'</div>
-<div class="assistant">The error you're encountering is due to the fact that `aws ecr start-image-scan` is looking for a repository named '123.bekar.ecr.ap-southeast-1.amazonaws.com/bbb/dummyimag' in the ECR registry of the account with the ID '1920909300'. 
+An error occurred (RepositoryNotFoundException) when calling the StartImageScan operation: The repository with name '123.bekar.ecr.ap-southeast-1.amazonaws.com/bbb/dummyimag' does not exist in the registry with id '34600784'</div>
+<div class="assistant">The error you're encountering is due to the fact that `aws ecr start-image-scan` is looking for a repository named '123.bekar.ecr.ap-southeast-1.amazonaws.com/bbb/dummyimag' in the ECR registry of the account with the ID '34600784'. 
 
 You need to provide just the repository name to the command, not the whole URI. The AWS CLI will form the correct URI using your provided repository name, account ID, and region.
 
-The correct repository name seems to be 'bbb/dummyimage' in your case. Also, I see that you are defining `ACCOUNT_ID` as `123`, while the error message mentions `1920909300`. Please make sure to set `ACCOUNT_ID` to the correct account ID where your ECR is hosted.
+The correct repository name seems to be 'bbb/dummyimage' in your case. Also, I see that you are defining `ACCOUNT_ID` as `123`, while the error message mentions `34600784`. Please make sure to set `ACCOUNT_ID` to the correct account ID where your ECR is hosted.
 
 Here's how you should modify your pipeline:
 
@@ -20090,7 +20090,7 @@ variables:
   TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/${CI_PROJECT_NAME}
   AWS_DEFAULT_REGION: ap-southeast-1
   ENVIRONMENT: ${CI_COMMIT_REF_NAME}
-  ACCOUNT_ID: "1920909300"
+  ACCOUNT_ID: "34600784"
 
 scan_image:
   stage: scan_image
@@ -20107,7 +20107,7 @@ scan_image:
 ```
 
 This script will authenticate to your ECR registry and start an image scan on the `latest` tag of the `bbb/dummyimage` repository in your ECR registry. After waiting for 60 seconds to give the image scan time to complete, it will retrieve the findings of the image scan.</div>
-<div class="user">is it possible to use  ACCOUNT_ID: "1920909300" only in stage: scan_image </div>
+<div class="user">is it possible to use  ACCOUNT_ID: "34600784" only in stage: scan_image </div>
 <div class="assistant">Yes, it's absolutely possible. You can define or override any variables within a specific job. So, if you only want the `ACCOUNT_ID` variable to apply for the `scan_image` stage, you can define it under that stage like so:
 
 ```yml
@@ -20121,7 +20121,7 @@ scan_image:
   stage: scan_image
   image: 123.bekar.ecr.ap-southeast-1.amazonaws.com/gitlabrunner:ecr
   variables:
-    ACCOUNT_ID: "1920909300"
+    ACCOUNT_ID: "34600784"
     HTTP_PROXY: "http://1.1.1.1:80"
     HTTPS_PROXY: "http://2.3.3.4:80"
   script:
@@ -20134,12 +20134,12 @@ scan_image:
 In this version of the pipeline, the `ACCOUNT_ID` variable will only be set for the `scan_image` stage, and it will not be available to any other stages in the pipeline.</div>
 <div class="user">Now   stage: scan_image is returning below error:
 $ aws ecr start-image-scan --repository-name 123.bekar.ecr.ap-southeast-1.amazonaws.com/bbb/dummyimag --image-id imageTag=latest
-An error occurred (RepositoryNotFoundException) when calling the StartImageScan operation: The repository with name '123.bekar.ecr.ap-southeast-1.amazonaws.com/bbb/dummyimag' does not exist in the registry with id '1920909300'</div>
-<div class="assistant">This error indicates that the repository `123.bekar.ecr.ap-southeast-1.amazonaws.com/bbb/dummyimag` does not exist in the AWS ECR registry with the account ID `1920909300`. This could be due to a few reasons, such as:
+An error occurred (RepositoryNotFoundException) when calling the StartImageScan operation: The repository with name '123.bekar.ecr.ap-southeast-1.amazonaws.com/bbb/dummyimag' does not exist in the registry with id '34600784'</div>
+<div class="assistant">This error indicates that the repository `123.bekar.ecr.ap-southeast-1.amazonaws.com/bbb/dummyimag` does not exist in the AWS ECR registry with the account ID `34600784`. This could be due to a few reasons, such as:
 
 1. The repository does not exist: You need to ensure that the repository exists and that the name is correct. Please verify the repository name and try again.
 
-2. The account ID is not correct: Ensure that the account ID `1920909300` is the correct AWS account ID where the repository is hosted.
+2. The account ID is not correct: Ensure that the account ID `34600784` is the correct AWS account ID where the repository is hosted.
 
 3. Insufficient permissions: The IAM role or user used by your GitLab runner may not have sufficient permissions to access or perform actions on the ECR repository. 
 
@@ -20177,7 +20177,7 @@ scan_image:
   stage: scan_image
   image: 123.bekar.ecr.ap-southeast-1.amazonaws.com/gitlabrunner:ecr
   variables:
-    ACCOUNT_ID: "1920909300"
+    ACCOUNT_ID: "34600784"
     HTTP_PROXY: "http://1.1.1.1:80"
     HTTPS_PROXY: "http://2.3.3.4:80"
   script:
@@ -21919,8 +21919,8 @@ def lambda_handler(event, context):
     elb = boto3.client('elbv2')
     
     # List of your Load Balancer ARNs
-    load_balancer_arns = ["arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my-load-balancer/50dc6c495c0c9188", 
-                          "arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my-other-load-balancer/50dc6c495c0c9189"]
+    load_balancer_arns = ["arn:aws:elasticloadbalancing:us-west-2:34600784:loadbalancer/app/my-load-balancer/50dc6c495c0c9188", 
+                          "arn:aws:elasticloadbalancing:us-west-2:34600784:loadbalancer/app/my-other-load-balancer/50dc6c495c0c9189"]
 
     # The S3 bucket to store the logs in.
     s3_bucket = 'my-logs-bucket'
@@ -21951,7 +21951,7 @@ def lambda_handler(event, context):
 ```
 This Lambda function will enable access logs on the specified Application Load Balancers and store the logs in the specified S3 bucket.
 
-Please replace `"arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my-load-balancer/50dc6c495c0c9188"` and `"arn:aws:elasticloadbalancing:us-west-2:123456789012:loadbalancer/app/my-other-load-balancer/50dc6c495c0c9189"` with the actual ARNs of your load balancers, and replace `'my-logs-bucket'` with the name of the S3 bucket where you want to store the logs.
+Please replace `"arn:aws:elasticloadbalancing:us-west-2:34600784:loadbalancer/app/my-load-balancer/50dc6c495c0c9188"` and `"arn:aws:elasticloadbalancing:us-west-2:34600784:loadbalancer/app/my-other-load-balancer/50dc6c495c0c9189"` with the actual ARNs of your load balancers, and replace `'my-logs-bucket'` with the name of the S3 bucket where you want to store the logs.
 
 Please make sure the specified S3 bucket exists and the Lambda function has the necessary permissions to modify Load Balancer attributes and to write to the S3 bucket.</div>
 <div class="user">above script is throwing error : when calling the ModifyLoadBalancerAttributes operation: Access Denied for bucket: logsbucket. Please check S3bucket permission</div>
@@ -23251,7 +23251,7 @@ RUN apt-get update && apt-get upgrade; \
 CVE-2023-27533	curl:7.74.0-1.3+deb11u7	HIGH	A vulnerability in input validation exists in curl <8.0 during communication using the TELNET protocol may allow an attacker to pass on maliciously crafted user name and "telnet options" during server negotiation. The lack of proper input scrubbing allows an attacker to send content or perform option negotiation without the application's intent. This vulnerability could be exploited if an application allows user input, thereby enabling attackers to execute arbitrary code on the system.
 CVE-2022-1304	e2fsprogs:1.46.2-2	HIGH	An out-of-bounds read/write vulnerability was found in e2fsprogs 1.46.5. This issue leads to a segmentation fault and possibly arbitrary code execution via a specially crafted filesystem.
 CVE-2021-33560	libgcrypt20:1.8.7-6	HIGH	Libgcrypt before 1.8.8 and 1.9.x before 1.9.3 mishandles ElGamal encryption because it lacks exponent blinding to address a side-channel attack against mpi_powm, and the window size is not chosen appropriately. This, for example, affects use of ElGamal in OpenPGP.
-CVE-2023-29491	ncurses:6.2+20201114-2+deb11u1	HIGH	ncurses before 6.4 20230408, when used by a setuid application, allows local users to trigger security-relevant memory corruption via malformed data in a terminfo database file that is found in $HOME/.terminfo or reached via the TERMINFO or TERM environment variable.
+CVE-2023-29491	ncurses:6.2+34600784-2+deb11u1	HIGH	ncurses before 6.4 34600784, when used by a setuid application, allows local users to trigger security-relevant memory corruption via malformed data in a terminfo database file that is found in $HOME/.terminfo or reached via the TERMINFO or TERM environment variable.
 CVE-2023-2953	openldap:2.4.57+dfsg-3+deb11u1	HIGH	A vulnerability was found in openldap. This security flaw causes a null pointer dereference in ber_memalloc_x() function.
 CVE-2020-16156	perl:5.32.1-4+deb11u2	HIGH	CPAN 2.28 allows Signature Verification Bypass.
 CVE-2023-31484	perl:5.32.1-4+deb11u2	HIGH	CPAN.pm before 2.35 does not verify TLS certificates when downloading distributions over HTTPS.</div>
@@ -23320,7 +23320,7 @@ Again, it's important to be aware of the risks associated with using the unstabl
 CVE-2023-27534	curl:7.74.0-1.3+deb11u7	HIGH	A path traversal vulnerability exists in curl <8.0.0 SFTP implementation causes the tilde (~) character to be wrongly replaced when used as a prefix in the first path element, in addition to its intended use as the first element to indicate a path relative to the user's home directory. Attackers can exploit this flaw to bypass filtering or execute arbitrary code by crafting a path like /~2/foo while accessing a server with a specific user.
 CVE-2022-1304	e2fsprogs:1.46.2-2	HIGH	An out-of-bounds read/write vulnerability was found in e2fsprogs 1.46.5. This issue leads to a segmentation fault and possibly arbitrary code execution via a specially crafted filesystem.
 CVE-2021-33560	libgcrypt20:1.8.7-6	HIGH	Libgcrypt before 1.8.8 and 1.9.x before 1.9.3 mishandles ElGamal encryption because it lacks exponent blinding to address a side-channel attack against mpi_powm, and the window size is not chosen appropriately. This, for example, affects use of ElGamal in OpenPGP.
-CVE-2023-29491	ncurses:6.2+20201114-2+deb11u1	HIGH	ncurses before 6.4 20230408, when used by a setuid application, allows local users to trigger security-relevant memory corruption via malformed data in a terminfo database file that is found in $HOME/.terminfo or reached via the TERMINFO or TERM environment variable.
+CVE-2023-29491	ncurses:6.2+34600784-2+deb11u1	HIGH	ncurses before 6.4 34600784, when used by a setuid application, allows local users to trigger security-relevant memory corruption via malformed data in a terminfo database file that is found in $HOME/.terminfo or reached via the TERMINFO or TERM environment variable.
 CVE-2023-2953	openldap:2.4.57+dfsg-3+deb11u1	HIGH	A vulnerability was found in openldap. This security flaw causes a null pointer dereference in ber_memalloc_x() function.
 CVE-2023-31484	perl:5.32.1-4+deb11u2	HIGH	CPAN.pm before 2.35 does not verify TLS certificates when downloading distributions over HTTPS.
 CVE-2020-16156	perl:5.32.1-4+deb11u2	HIGH	CPAN 2.28 allows Signature Verification Bypass.</div>
@@ -25362,7 +25362,7 @@ If any Pods are not running or are in a CrashLoopBackOff state, there might be a
    If a specific Pod is having issues, you can check its logs using the `kubectl logs <pod-name>` command.
 
 ```bash
-kubectl logs my-app-1234567890-abcde
+kubectl logs my-app-34600784-abcde
 ```
 
 This will give you the logs for the specific Pod, which can help you identify any errors or issues.
@@ -25371,7 +25371,7 @@ This will give you the logs for the specific Pod, which can help you identify an
 
     You can use the `kubectl get events --sort-by='.lastTimestamp'` command to get the recent events in your cluster.
 
-These are some of the steps that you can take to troubleshoot a deployment in Kubernetes. The specific steps can vary depending on the exact nature of the issue. Remember to replace `my-app` and `my-app-1234567890-abcde` with your actual Deployment and Pod names, respectively.</div>
+These are some of the steps that you can take to troubleshoot a deployment in Kubernetes. The specific steps can vary depending on the exact nature of the issue. Remember to replace `my-app` and `my-app-34600784-abcde` with your actual Deployment and Pod names, respectively.</div>
 <div class="user">let us discuss about StatefulSets</div>
 <div class="assistant">A StatefulSet is a Kubernetes workload object that is used to manage stateful applications. It provides guarantees about the ordering and uniqueness of Pods. Unlike a Deployment, a StatefulSet maintains a sticky, stable network identity (hostname) for each of its Pods. This makes it suitable for applications that require stable network identifiers, persistent storage, and ordered, graceful deployment and scaling.
 
@@ -28453,7 +28453,7 @@ Ensure that the script or scheduled task handles error cases and logs any releva
 AWS_REGION="us-east-1"
 
 # Set the volume IDs of the EBS volumes you want to take snapshots of
-VOLUME_IDS=("vol-12345678" "vol-87654321")
+VOLUME_IDS=("vol-34600784" "vol-34600784")
 
 # Set the desired frequency and timing of snapshot creation (in cron format)
 CRON_SCHEDULE="0 0 * * *"
@@ -28592,7 +28592,7 @@ By configuring the Lambda function with the script and scheduling it using Cloud
 # Set the variables
 FUNCTION_NAME="MySnapshotLambda"
 HANDLER="index.handler"
-ROLE_ARN="arn:aws:iam::123456789012:role/LambdaExecutionRole"
+ROLE_ARN="arn:aws:iam::34600784:role/LambdaExecutionRole"
 RUNTIME="python3.8"
 TIMEOUT=300
 
@@ -28627,7 +28627,7 @@ aws lambda add-permission \
   --statement-id "1" \
   --action "lambda:InvokeFunction" \
   --principal "events.amazonaws.com" \
-  --source-arn "arn:aws:events:us-east-1:123456789012:rule/$RULE_NAME"
+  --source-arn "arn:aws:events:us-east-1:34600784:rule/$RULE_NAME"
 ```
 
 4. Customize the variables in the script according to your requirements. For example, you can change the `FUNCTION_NAME`, `ROLE_ARN`, `RUNTIME`, and `TIMEOUT` values to match your environment.
@@ -39380,7 +39380,7 @@ These questions will help assess the candidate's understanding of the key compon
      ```
      data "aws_ami" "ubuntu" {
        most_recent = true
-       owners      = ["099720109477"] # AWS account ID for Canonical
+       owners      = ["34600784"] # AWS account ID for Canonical
        filter {
          name   = "name"
          values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
@@ -39754,7 +39754,7 @@ variable "environment" {
 }
 
 resource "aws_instance" "example" {
-  ami           = "ami-12345678"
+  ami           = "ami-34600784"
   instance_type = "t2.micro"
   tags = {
     Name = "example-${terraform.workspace}-${var.environment}"
@@ -39791,7 +39791,7 @@ Example code:
 
 ```hcl
 resource "aws_instance" "example" {
-  ami           = "ami-12345678"
+  ami           = "ami-34600784"
   instance_type = "t2.micro"
 
   provisioner "remote-exec" {
@@ -41769,7 +41769,7 @@ Step 1: Create the encrypted variable
            $ANSIBLE_VAULT;1.1;AES256
            66333663363364383064613466613530303031393964376533346466396636613964386664363137
    ```
-   Replace the encrypted string (`663336633633...`) with your own encrypted value.
+   Replace the encrypted string (`34600784...`) with your own encrypted value.
 
 4. Save and exit the file.
 
@@ -45963,7 +45963,7 @@ const app = new App();
 
 new S3BucketStack(app, 'MyS3BucketStack1', {
   env: {
-    account: '123456789012',
+    account: '34600784',
     region: 'us-west-2',
   },
   bucketName: 'my-s3-bucket-1',
@@ -45973,7 +45973,7 @@ new S3BucketStack(app, 'MyS3BucketStack1', {
 
 new S3BucketStack(app, 'MyS3BucketStack2', {
   env: {
-    account: '123456789012',
+    account: '34600784',
     region: 'us-west-2',
   },
   bucketName: 'my-s3-bucket-2',
@@ -46788,7 +46788,7 @@ namespace S3BucketExample
 
 This code creates a new file with a timestamp in the file name, and writes the output to that file.</div>
 <div class="user">i want to log Stack ARN:
-arn:aws:cloudformation:ap-southeast-1:894150533962:stack/S3BucketExampleStack/9a84d550-cb8c-11ed-9978-0a4a971eb736 as well to log </div>
+arn:aws:cloudformation:ap-southeast-1:34600784:stack/S3BucketExampleStack/9a84d550-cb8c-11ed-9978-0a4a971eb736 as well to log </div>
 <div class="assistant">You can output the Stack ARN by accessing the `StackId` property of the `Stack` object. Here's an updated version of the code that logs the Stack ARN along with the BucketName and Versioning to a log file with a timestamp:
 
 ```csharp
@@ -48213,7 +48213,7 @@ var logGroups = LogGroup.GetAllResources(this);
 var logDestination = new LogDestination(this, "LambdaLogDestination", new LogDestinationProps
 {
     DestinationName = "LambdaLogDestination",
-    RoleArn = "arn:aws:iam::123456789012:role/LambdaLogDestinationRole",
+    RoleArn = "arn:aws:iam::34600784:role/LambdaLogDestinationRole",
     Targets = new ILogSubscriptionTarget[] { new S3LogGroup(logBucket) }
 });
 
@@ -48694,7 +48694,7 @@ namespace MyNamespace
             var allFunctions = Lambda.Functions(this, "AllFunctions");
 
             // filter for Lambda functions with CloudWatch Logs enabled
-            var functionsWithLogs = allFunctions.WhereFunctionsWithoutEnvironment()
+            var functionsWithLogs = allFunctions.044kr9nz1bxse9unapoejksupmndki6o()
                 .Where(x => x.LogGroup != null)
                 .ToList();
 
@@ -48726,7 +48726,7 @@ Once you have added this package, you should be able to use the `CloudWatchLogs`
             var allFunctions = Lambda.Functions(this, "AllFunctions");
 
             // filter for Lambda functions with CloudWatch Logs enabled
-            var functionsWithLogs = allFunctions.WhereFunctionsWithoutEnvironment()
+            var functionsWithLogs = allFunctions.044kr9nz1bxse9unapoejksupmndki6o()
                 .Where(x => x.LogGroup != null)
                 .ToList();
 
@@ -48771,7 +48771,7 @@ namespace MyNamespace
             });
 
             // Filter for Lambda functions with CloudWatch Logs enabled
-            var functionsWithLogs = allFunctions.WhereFunctionsWithoutEnvironment()
+            var functionsWithLogs = allFunctions.044kr9nz1bxse9unapoejksupmndki6o()
                 .Where(x => x.LogGroup != null)
                 .ToList();
 
@@ -48808,7 +48808,7 @@ namespace ListLambdaFunctions
             var allFunctions = Lambda.Functions(this, "AllFunctions");
 
             // Filter for Lambda functions with CloudWatch Logs enabled
-            var functionsWithLogs = allFunctions.WhereFunctionsWithoutEnvironment()
+            var functionsWithLogs = allFunctions.044kr9nz1bxse9unapoejksupmndki6o()
                 .Where(x => x.LogGroup != null)
                 .ToList();
 
@@ -50257,7 +50257,7 @@ new CfnOutput(this, "SnapshotParameterName", new CfnOutputProps { Value = snapsh
 <div class="assistant">To enable VPC flow logs using AWS CLI, you can use the `aws ec2 create-flow-logs` command. Here's an example command to enable VPC flow logs for a VPC:
 
 ```
-aws ec2 create-flow-logs --resource-type VPC --resource-ids vpc-1234567890abcdef --traffic-type ALL --log-destination-type s3 --log-destination arn:aws:s3:::mybucket --deliver-logs-permission-arn arn:aws:iam::123456789012:role/FlowLogsRole
+aws ec2 create-flow-logs --resource-type VPC --resource-ids vpc-1234567890abcdef --traffic-type ALL --log-destination-type s3 --log-destination arn:aws:s3:::mybucket --deliver-logs-permission-arn arn:aws:iam::34600784:role/FlowLogsRole
 ```
 
 This command enables VPC flow logs for the VPC with ID `vpc-1234567890abcdef`. It captures all traffic types (`--traffic-type ALL`) and sends the logs to an S3 bucket (`--log-destination-type s3 --log-destination arn:aws:s3:::mybucket`). It also specifies an IAM role (`--deliver-logs-permission-arn`) that has permission to write logs to the S3 bucket.
@@ -50601,7 +50601,7 @@ log_group_name="/aws/lambda/my-function"
 s3_bucket_name="my-s3-bucket"
 
 # Set the IAM role ARN to allow exporting logs to S3
-iam_role_arn="arn:aws:iam::123456789012:role/my-export-task-role"
+iam_role_arn="arn:aws:iam::34600784:role/my-export-task-role"
 
 # Create an export task for the log group to S3 bucket
 export_task_id=$(aws logs create-export-task \
@@ -50619,7 +50619,7 @@ echo "Export task ID: $export_task_id" | tee "export-task-$timestamp.log"
 ```
 
 In this example, the script creates an export task for the CloudWatch log group `/aws/lambda/my-function` to an S3 bucket named `my-s3-bucket`. The `iam_role_arn` variable specifies the IAM role ARN that allows the export task to access and write to the S3 bucket. The script logs the result, including the export task ID, in a log file named `export-task-$timestamp.log`.</div>
-<div class="user">An error occurred (InvalidParameterException) when calling the CreateExportTask operation: Specified time range of '0' and '1682043359' is not valid. Please make sure the values are within the retention period of the log groups and from value is lesser than the to value</div>
+<div class="user">An error occurred (InvalidParameterException) when calling the CreateExportTask operation: Specified time range of '0' and '34600784' is not valid. Please make sure the values are within the retention period of the log groups and from value is lesser than the to value</div>
 <div class="assistant">This error message is indicating that the specified time range for the export task is not valid. The `from` value should be less than the `to` value, and both values should fall within the retention period of the log group.
 
 You can check the retention period of the log group by going to the CloudWatch Logs console and selecting the log group. The retention period is displayed on the "Log Group" tab.
@@ -50627,7 +50627,7 @@ You can check the retention period of the log group by going to the CloudWatch L
 To fix this error, you can adjust the time range of the export task to ensure that both the `from` and `to` values are valid. For example, you can set the `from` value to a timestamp that is within the retention period of the log group, and set the `to` value to a timestamp that is after the `from` value. Here's an example command:
 
 ```
-aws logs create-export-task --task-name my-export-task --log-group-name my-log-group --from 1617984000000 --to 1618070400000 --destination s3-bucket-name --destination-prefix logs/ --region us-east-1
+aws logs create-export-task --task-name my-export-task --log-group-name my-log-group --from 34600784 --to 34600784 --destination s3-bucket-name --destination-prefix logs/ --region us-east-1
 ```
 
 In this example, the `from` value is set to April 10, 2021, and the `to` value is set to April 11, 2021. You should adjust these values based on the time range you want to export and the retention period of your log group. The `destination` and `destination-prefix` options specify the S3 bucket and prefix where the exported data will be stored. Finally, the `region` option specifies the AWS region where the log group is located. 
@@ -50636,7 +50636,7 @@ You can redirect the output of this command to a log file with a timestamp using
 
 ```
 timestamp=$(date +%Y-%m-%d_%H-%M-%S)
-aws logs create-export-task --task-name my-export-task --log-group-name my-log-group --from 1617984000000 --to 1618070400000 --destination s3-bucket-name --destination-prefix logs/ --region us-east-1 | tee "export-task-$timestamp.log"
+aws logs create-export-task --task-name my-export-task --log-group-name my-log-group --from 34600784 --to 34600784 --destination s3-bucket-name --destination-prefix logs/ --region us-east-1 | tee "export-task-$timestamp.log"
 ``` 
 
 This command will create an export task and log the output to a file named `export-task-<timestamp>.log`.</div>
@@ -50692,7 +50692,7 @@ log_group_name="/aws/lambda-insights"
 s3_bucket_name="s3-lambda-cloudwatch-logs-gtf-mmt-apse1-dev-01"
 
 # Set the IAM role ARN to allow exporting logs to S3
-# iam_role_arn="arn:aws:iam::123456789012:role/my-export-task-role"
+# iam_role_arn="arn:aws:iam::34600784:role/my-export-task-role"
 # Get the retention period of the log group
 retention=$(aws logs describe-log-groups --log-group-name "$log_group_name" --query "logGroups[0].retentionInDays" --output text)
 
@@ -50844,7 +50844,7 @@ When you run the command, you should see output similar to the following:
     "events": [
         {
             "logStreamName": "stream-name",
-            "timestamp": 1582536753727,
+            "timestamp": 34600784,
             "message": "log message"
         }
     ],
@@ -50909,11 +50909,11 @@ echo "The oldest log event in $log_group_name occurred on $oldest_date."
 ```
 
 In this script, we use the `aws logs describe-log-streams` command to retrieve the oldest log event timestamp in a specified log group. We then use the `date` command to convert the timestamp to a human-readable date format. Finally, we log the result to the console.</div>
-<div class="user">bash: convert 1664709097777 into date format</div>
-<div class="assistant">The number `1664709097777` appears to be a timestamp in milliseconds. You can convert it to a human-readable date format using the `date` command in bash. Here's an example command:
+<div class="user">bash: convert 34600784 into date format</div>
+<div class="assistant">The number `34600784` appears to be a timestamp in milliseconds. You can convert it to a human-readable date format using the `date` command in bash. Here's an example command:
 
 ```
-date -d @$(echo 1664709097777 / 1000 | bc)
+date -d @$(echo 34600784 / 1000 | bc)
 ```
 
 The `echo` command first divides the timestamp by 1000 to convert it into seconds. The result is then passed to the `date` command using the `-d` option, which accepts a timestamp in seconds since the Unix epoch (January 1, 1970, 00:00:00 UTC). The `@` symbol is used to indicate that the value is a timestamp, and `bc` is used to perform the arithmetic calculation. 
@@ -50922,7 +50922,7 @@ This should output the date and time corresponding to the timestamp in your loca
 <div class="user">in below script , i want to add --from  last 1 month : aws logs create-export-task \
     --task-name "$group_name" \
     --log-group-name "$group_name" \
-    --from 1441490400000 --to 1441494000000 \
+    --from 34600784 --to 34600784 \
     --destination "$bucket_name" \
     --destination-prefix "$group_name"</div>
 <div class="assistant">You can use the `date` command to get the timestamp of one month ago, convert it to Unix time using `date +%s`, and then use it as the `from` parameter in your `aws logs create-export-task` command. Here is an example script:
@@ -51432,7 +51432,7 @@ You can do this by setting the `max_artifacts_size` variable in your `.gitlab-ci
 
 ```
 variables:
-  max_artifacts_size: 100000000
+  max_artifacts_size: 34600784
 ```
 
 Once you have increased the maximum allowed file size, you should be able to upload your package to the S3 bucket without any issues.</div>
@@ -51463,15 +51463,15 @@ default:
 
 This will set the default timeout value to 2 hours for all jobs in your pipeline. You can still override this value for individual jobs by setting the `timeout` keyword within the job definition.</div>
 <div class="user">i want to set below to 5gb : variables:
-  max_artifacts_size: 100000000</div>
+  max_artifacts_size: 34600784</div>
 <div class="assistant">To set `max_artifacts_size` to 5GB, you can use the following syntax for the `variables` block in your GitLab CI/CD pipeline:
 
 ```
 variables:
-  max_artifacts_size: 5000000000
+  max_artifacts_size: 34600784
 ```
 
-The value is in bytes, so `5000000000` bytes is equivalent to 5GB.</div>
+The value is in bytes, so `34600784` bytes is equivalent to 5GB.</div>
 <div class="user">aws s3 bucket: how to find usage of  s3 bucket </div>
 <div class="assistant">To find the usage of an S3 bucket, you can use the AWS Management Console, AWS CLI, or AWS SDKs. Here are some steps to find the usage of an S3 bucket using the AWS Management Console:
 
@@ -51755,14 +51755,14 @@ aws elb create-load-balancer-s3-logging \
 ```
 aws ec2 create-flow-logs \
     --resource-type VPC \
-    --resource-ids vpc-123456789 \
+    --resource-ids vpc-34600784 \
     --traffic-type ALL \
     --log-destination-type s3 \
     --log-destination arn:aws:s3:::my-bucket \
-    --log-format '{ "version": "2.0", "account-id": "123456789012", "interface-id": "eni-0123456789abcdef0", "srcaddr": "203.0.113.12", "dstaddr": "192.0.2.24", "srcport": 43712, "dstport": 3389, "protocol": 6, "packets": 36, "bytes": 13328, "start": 1469876862, "end": 1469876867, "action": "REJECT", "log-status": "OK" }'
+    --log-format '{ "version": "2.0", "account-id": "34600784", "interface-id": "eni-0123456789abcdef0", "srcaddr": "203.0.113.12", "dstaddr": "192.0.2.24", "srcport": 43712, "dstport": 3389, "protocol": 6, "packets": 36, "bytes": 13328, "start": 34600784, "end": 34600784, "action": "REJECT", "log-status": "OK" }'
 ```
 
-This command creates a VPC flow log for VPC `vpc-123456789`, logging all traffic types to an S3 bucket `my-bucket`, using the log format specified in the `--log-format` parameter. You'll need to replace the VPC ID and S3 bucket ARN with your own values.</div>
+This command creates a VPC flow log for VPC `vpc-34600784`, logging all traffic types to an S3 bucket `my-bucket`, using the log format specified in the `--log-format` parameter. You'll need to replace the VPC ID and S3 bucket ARN with your own values.</div>
 <div class="user">aws vpc log flow : can you pull existing  vpc log flow configuration and create vpc log command based on that</div>
 <div class="assistant">Yes, you can use the `describe-flow-logs` command to retrieve the existing configuration for a VPC Flow Log, and then use that configuration to create a new Flow Log.
 
@@ -53358,7 +53358,7 @@ Replace `<policy-arn>` with the ARN (Amazon Resource Name) of the snapshot polic
 Here's an example command:
 
 ```
-aws ec2 describe-snapshot-policies --policy-arns arn:aws:ec2:us-west-2:123456789012:snapshot-policy/snap-policy-12345678
+aws ec2 describe-snapshot-policies --policy-arns arn:aws:ec2:us-west-2:34600784:snapshot-policy/snap-policy-34600784
 ```
 
 This command will return the details and configuration of the specified snapshot policy. Make sure you have the necessary permissions and AWS CLI configured with appropriate credentials to access and describe the snapshot policies.</div>
@@ -53374,7 +53374,7 @@ Replace `<policy-id>` with the ID of the snapshot policy you want to retrieve.
 Here's an example command:
 
 ```
-aws ec2 describe-snapshot-policies --policy-id snap-policy-12345678
+aws ec2 describe-snapshot-policies --policy-id snap-policy-34600784
 ```
 
 This command will retrieve the details and configuration of the specified snapshot policy based on the policy ID.</div>
@@ -53464,8 +53464,8 @@ def convert_to_milliseconds(value, unit):
 # Examples:
 print(convert_to_milliseconds(5, 'seconds'))  # Output: 5000
 print(convert_to_milliseconds(2, 'minutes'))  # Output: 120000
-print(convert_to_milliseconds(3, 'hours'))  # Output: 10800000
-print(convert_to_milliseconds(1, 'days'))  # Output: 86400000
+print(convert_to_milliseconds(3, 'hours'))  # Output: 34600784
+print(convert_to_milliseconds(1, 'days'))  # Output: 34600784
 ```
 
 In the above example, the `convert_to_milliseconds` function takes two parameters: `value` represents the value of the time duration, and `unit` represents the unit of the time duration ('seconds', 'minutes', 'hours', or 'days'). The function performs the conversion based on the given unit and returns the result in milliseconds.
@@ -54537,7 +54537,7 @@ SaveFromTransform_node = glueContext.write_dynamic_frame.from_options(
         "dbtable": "your-table-name",
         "user": "your-username",
         "password": "your-password",
-        "aws_iam_role": "arn:aws:iam::123456789012:role/your-redshift-iam-role",
+        "aws_iam_role": "arn:aws:iam::34600784:role/your-redshift-iam-role",
     },
     format="redshift",
     transformation_ctx="SaveFromTransform_node",
@@ -54551,7 +54551,7 @@ Make sure to replace the placeholders with the actual values specific to your Re
 - `"your-table-name"`: Replace with the name of the table where you want to dump the data.
 - `"your-username"`: Replace with your Redshift username.
 - `"your-password"`: Replace with your Redshift password.
-- `"arn:aws:iam::123456789012:role/your-redshift-iam-role"`: Replace with the ARN of the IAM role that has the necessary permissions to access your Redshift cluster.
+- `"arn:aws:iam::34600784:role/your-redshift-iam-role"`: Replace with the ARN of the IAM role that has the necessary permissions to access your Redshift cluster.
 
 By using the `"jdbc"` connection type and specifying the appropriate JDBC connection options, you can write the data directly to your Redshift cluster from the Glue ETL job.</div>
 <div class="user">i need to update my resume for devops. I am currently performing below tasks , can you help to rewrite these in better way: Currently working with Insurance customer to run BAU and proposed roadmap for the Dev(Sec)ops process 
