@@ -24,7 +24,7 @@ Install the Helm binary
 Once you've downloaded the Helm binary, you'll need to install it. The process differs depending on your operating system.
 
 On macOS, you can use Homebrew
-**brew install helm**
+   **brew install helm**
 
 On Linux, you'll need to manually install the binary. After downloading, you can move it to your bin folder with the following commands:
 
@@ -36,7 +36,7 @@ sudo mv helm /usr/local/bin/helm
 
 Confirm the Installation
 You can confirm that Helm is installed correctly by running the following command in your terminal:
-**helm version**
+   **helm version**
 
 
 This should return the version of Helm that you installed.
